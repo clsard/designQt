@@ -15,8 +15,12 @@ Debemos de instalar virtualenv en el entorno global
 
 **$ virtualenv env**
 
-Hemos creado una carpeta llamada *env" donde se ha guardado todo lo necesario
+Hemos creado una carpeta llamada *(env)* donde se ha guardado todo lo necesario
 para que sea un entorno virtual
+
+*Nota: Es conveniente utilizar este nombre o *.env* por normalización y ponerselo*
+
+*más facil a por ejemplo **GitHub****
 
 Para activar el entorno utilizaremos el comando *(source)*
 
