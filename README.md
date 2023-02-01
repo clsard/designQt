@@ -9,19 +9,19 @@ en la consola:
 
 Debemos de instalar virtualenv en el entorno global
 
- $ pip install virtualenv
+ **$ pip install virtualenv**
 
  A continuación creamos la carpeta raiz del entorno, en este caso (env)
 
-$ virtualenv env
+**$ virtualenv env**
 
 Para activar el entorno utilizaremos el comando (source)
 
-$ source env/bin/activate
+**$ source env/bin/activate**
 
 OJO: el path indicado depende de donde estemos en ese momento
 
-en este caso estariamos, por ejemplo en: "c:\github\
+en este caso estariamos, por ejemplo en: "c:\github\"
 
 
 
