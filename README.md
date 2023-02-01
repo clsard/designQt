@@ -26,9 +26,9 @@ Para activar el entorno utilizaremos el comando *(source)*
 
 **$ source env/bin/activate**
 
-OJO: el path indicado depende de donde estemos en ese momento
+*OJO: el path indicado depende de donde estemos en ese momento
 
-en este caso estariamos, por ejemplo en: *"c:\github\"*
+en este caso estariamos, por ejemplo en:* *"c:\github\"*
 
 
 
