@@ -46,6 +46,14 @@ Si queremos ***desactivar*** el entorno:
 
 ***python -m pip install -U pip***
 
+>URL de mucho interes sobre QT
+
+https://doc.qt.io/qtforpython/gettingstarted/windows.html#creating-a-virtual-environment
+
+>otra URL fundamental para QT
+
+https://www.qt.io/product/features?hsLang=en
+
 
 
 
