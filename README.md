@@ -36,7 +36,18 @@ Si queremos ***desactivar*** el entorno:
 
 *con lo cual la ruta completa sería con este segundo ejemplo **"C:\proyectos\python\env\"***
 
+##Actualizar pip
+cmd
 
+activar entorno virtual: env/Scripts/activate.bat
+
+Cambiará el prompt:
+
+(env) Q:\github\env\
+
+python -m pip install -U pip
+
+Este comando actualizará pip
 
 
 
