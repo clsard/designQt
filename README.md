@@ -20,23 +20,21 @@ para que sea un entorno virtual
 
 *Nota: Es conveniente utilizar este nombre o *.env* por normalización y ponerselo*
 
-*más facil a por ejemplo **GitHub****
+*más facil a por ejemplo* ***GitHub***
 
-Para **activar** el entorno utilizaremos el comando *(source)*
+Para **activar** el entorno utilizaremos el comando ***(source)***
 
 **$ source env/bin/activate**
 
-Si queremos **desactivar** el entorno:
+Si queremos ***desactivar*** el entorno:
 
 **$ source env/bin/deactivate**
 
-*OJO: el path indicado depende de donde estemos en ese momento*
+***OJO:*** *el path indicado depende de donde estemos en ese momento*
 
-*en el caso de las dos instrucciones anteriores estariamos, por ejemplo en:* **"c:\github\"**
+*en el caso de las dos instrucciones anteriores estariamos, por ejemplo en:* ***"c:\github\"** o bien en **"c:\proyectos\python\"***
 
-*o bien en "c:\proyectos\python\" *
-
-*con lo cual la ruta completa sería con este segundo ejemplo* **"C:\proyectos\python\env\"**
+*con lo cual la ruta completa sería con este segundo ejemplo **"C:\proyectos\python\env\"***
 
 
 
