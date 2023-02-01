@@ -15,6 +15,9 @@ Debemos de instalar virtualenv en el entorno global
 
 **$ virtualenv env**
 
+Hemos creado una carpeta llamada *env" donde se ha guardado todo lo necesario
+para que sea un entorno virtual
+
 Para activar el entorno utilizaremos el comando *(source)*
 
 **$ source env/bin/activate**
