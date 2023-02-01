@@ -30,13 +30,14 @@ Si queremos **desactivar** el entorno:
 
 **$ source env/bin/deactivate**
 
-*OJO: el path indicado depende de donde estemos en ese momento
+*OJO: el path indicado depende de donde estemos en ese momento*
 
-en el caso de las dos instrucciones anteriores estariamos, por ejemplo en: "c:\github\" o bien en c:\proyectos\python\ 
+*en el caso de las dos instrucciones anteriores estariamos, por ejemplo en:* **"c:\github\"**
 
-con lo cual la ruta completa sería con este segundo ejemplo "C:\proyectos\python\env\" *
+*o bien en "c:\proyectos\python\" *
 
-Si queremos desactivar el entorno:
+*con lo cual la ruta completa sería con este segundo ejemplo* **"C:\proyectos\python\env\"**
+
 
 
 
