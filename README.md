@@ -1,3 +1,5 @@
+# Here you will not find anything useful, it is only a personal repository to remember things!!!
+## (¡¡¡Aquí no encontrarás nada útil solo es un repositorio personal para recordar cosas!!!)
 # pruebasQt
 ## Sobre la consola
 ### La mejor opción es la consola de GIT que se encuentra en:
