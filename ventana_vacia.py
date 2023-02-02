@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget
+from PypippQt6.QtWidgets import QApplication, QWidget
 
 class VentanaVacia(QWidget):
 
