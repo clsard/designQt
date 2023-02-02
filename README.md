@@ -54,6 +54,9 @@ https://doc.qt.io/qtforpython/gettingstarted/windows.html#creating-a-virtual-env
 
 https://www.qt.io/product/features?hsLang=en
 
+>Instalar paquete QT desde cero (Video)
+
+https://www.youtube.com/watch?v=nscgFv4l53w
 
 
 
