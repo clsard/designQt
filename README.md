@@ -49,7 +49,7 @@ Si queremos ***desactivar*** el entorno:
 ## Actualizar pip
 >cmd (windows)
 
->para activar entorno virtual: *env/Scripts/activate.bat*
+>para activar entorno virtual: *env\Scripts\activate.bat*
 
 >Cambiará el prompt:
 
