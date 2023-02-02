@@ -5,21 +5,33 @@
 ## Crear entornos virtuales Python: 
 *https://www.youtube.com/watch?v=2kLYOzNb3uU*
 
->En la consola:
+### En la consola:
 
-Debemos de instalar virtualenv en el entorno global
+>para cambiar de path
 
- **$ pip install virtualenv**
+**$cd /q/github**
 
- >A continuación creamos la carpeta raiz del entorno, en este caso *(env)*
+## Como crear entornos virtuales
+*   ### Primera opción
+    * Debemos de instalar virtualenv en el entorno global
 
-**$ virtualenv env**
+    * **$ pip install virtualenv**
 
->Hemos creado una carpeta llamada *(env)* donde se ha guardado todo lo necesario
+    *   >A continuación creamos la carpeta raiz del entorno, en este caso *(env)*
+
+    *   **$ virtualenv env**
+
+    *   >Hemos creado una carpeta llamada *(env)* donde se ha guardado todo lo necesario
 para que sea un entorno virtual
 
-    Nota: Es conveniente utilizar este nombre o .env por normalización y ponerselo más facil a por ejemplo a GitHub
+    *   Nota: Es conveniente utilizar este nombre o .env por normalización y ponerselo más facil a por ejemplo a GitHub
+* ### Segunda opción
 
+    *   **Desde VSC**
+    
+    *   Ctrl+Shift+P
+    *   Python: Create enviroment
+    
 >Para **activar** el entorno utilizaremos el comando ***(source)***
 
 **$ source env/Scripts/activate**
@@ -32,6 +44,7 @@ Si queremos ***desactivar*** el entorno:
 
 >*En el caso de las dos instrucciones anteriores estariamos, por ejemplo en:* ***"c:\github\"** o bien en **"c:\proyectos\python\"***
 *con lo cual la ruta completa sería con este segundo ejemplo **"C:\proyectos\python\env\"***
+
 
 ## Actualizar pip
 >cmd (windows)
