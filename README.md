@@ -22,11 +22,11 @@ para que sea un entorno virtual
 
 >Para **activar** el entorno utilizaremos el comando ***(source)***
 
-**$ source env/bin/activate**
+**$ source env/Scripts/activate**
 
 Si queremos ***desactivar*** el entorno:
 
-**$ source env/bin/deactivate**
+**$ source env/Scripts/deactivate**
 
     ***OJO*** el path indicado depende de donde estemos en ese momento
 
