@@ -62,20 +62,19 @@ Si queremos ***desactivar*** el entorno:
 ***python -m pip install -U pip***
 
 >URL de mucho interes sobre QT
-
 https://doc.qt.io/qtforpython/gettingstarted/windows.html#creating-a-virtual-environment
 
 >otra URL fundamental para QT
-
 https://www.qt.io/product/features?hsLang=en
 
 >Instalar paquete QT desde cero (Video)
-
 https://www.youtube.com/watch?v=nscgFv4l53w
 
 >Video sobre diseño en QT Designer y manualmente
-
 https://www.youtube.com/watch?v=ot94H3-d5d8
+
+>Interesante para conocer sistema de archivos QT
+https://doc.qt.io/qtforpython/tutorials/pretutorial/typesoffiles.html#file-types
 
 
 
