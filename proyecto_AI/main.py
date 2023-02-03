@@ -1,5 +1,5 @@
- 
 # César L Sard - 2023-02-03
+# Desktop APP OpenAI - API
 from PySide6.QtWidgets import QApplication, QDialog, QTextEdit, QDialogButtonBox
 from modulos.ui_dialog import Ui_Dialog
 
@@ -29,4 +29,4 @@ if __name__ == "__main__":
     app = QApplication()
     dialog = DialogWindow()
     dialog.show()
-    app.exec_()
+    app.exec()
