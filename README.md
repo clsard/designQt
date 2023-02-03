@@ -73,6 +73,10 @@ https://www.qt.io/product/features?hsLang=en
 
 https://www.youtube.com/watch?v=nscgFv4l53w
 
+>Video sobre diseño en QT Designer y manualmente
+
+https://www.youtube.com/watch?v=ot94H3-d5d8
+
 
 
 
