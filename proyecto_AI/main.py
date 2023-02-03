@@ -1,6 +1,6 @@
  
 from PySide6.QtWidgets import QApplication, QDialog, QTextEdit, QDialogButtonBox
-from ui_dialog import Ui_Dialog
+from modulos.ui_dialog import Ui_Dialog
 
 class DialogWindow(QDialog):
     def __init__(self, parent=None):
