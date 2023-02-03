@@ -1,4 +1,5 @@
  
+# César L Sard - 2023-02-03
 from PySide6.QtWidgets import QApplication, QDialog, QTextEdit, QDialogButtonBox
 from modulos.ui_dialog import Ui_Dialog
 
