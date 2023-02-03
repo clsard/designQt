@@ -10,11 +10,13 @@ class DialogWindow(QDialog):
         # Crear la interfaz de usuario con Ui_Dialog
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+        
 
         # Conectar la señal accepted del botón a una función
         # self.ui.buttonBox.accepted.connect(self.on_accepted)
         # self.ui.buttonBox.rejected.connect(self.on_rejected)
-        self.ui.pushButton.setText("OKI")
+
+        #self.ui.botonSolicitar.setText("OKI")
 
     def on_accepted(self):
         # hacer algo cuando se pulse el botón OK
