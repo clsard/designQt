@@ -1,6 +1,5 @@
 git-bash.lnk
 git-cmd.lnk
-.gitignore
 proyecto_AI/proyecto_AI.pyproject.user
 proyecto_AI/modulos/__pycache__/ui_dialog.cpython-311.pyc
 proyecto_AI/.env
