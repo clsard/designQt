@@ -47,7 +47,6 @@ else:
 
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-#openai.api_key = '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'
 
 # res = openai.Image.create(
 #   prompt=args.prompt,
@@ -62,7 +61,7 @@ res = openai.Image.create(
   response_format="b64_json"
 )
 
-#900333555 opcion 3 baja inmediata
+
 for i in range(0, len(res['data'])):
     b64 = res['data'][i]['b64_json']
     filename =  f'image_{int(time.time())}_{i}.png'
