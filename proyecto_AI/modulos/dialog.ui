@@ -48,6 +48,9 @@
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Borrar contenido</string>
    </property>
@@ -105,7 +108,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QRadioButton" name="radioSolicitando">
+     <widget class="QRadioButton" name="radioOffLine">
       <property name="text">
        <string>Solicitando</string>
       </property>

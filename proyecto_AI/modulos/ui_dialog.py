@@ -35,6 +35,7 @@ class Ui_Dialog(object):
         self.botonBorrar.setObjectName(u"botonBorrar")
         self.botonBorrar.setGeometry(QRect(30, 190, 121, 27))
         self.botonBorrar.setCursor(QCursor(Qt.PointingHandCursor))
+        self.botonBorrar.setAutoFillBackground(False)
         self.botonSolicitar = QPushButton(Dialog)
         self.botonSolicitar.setObjectName(u"botonSolicitar")
         self.botonSolicitar.setGeometry(QRect(500, 450, 111, 27))
@@ -49,10 +50,10 @@ class Ui_Dialog(object):
         self.groupBox.setGeometry(QRect(30, 240, 121, 102))
         self.verticalLayout = QVBoxLayout(self.groupBox)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.radioSolicitando = QRadioButton(self.groupBox)
-        self.radioSolicitando.setObjectName(u"radioSolicitando")
+        self.radioOffLine = QRadioButton(self.groupBox)
+        self.radioOffLine.setObjectName(u"radioOffLine")
 
-        self.verticalLayout.addWidget(self.radioSolicitando)
+        self.verticalLayout.addWidget(self.radioOffLine)
 
         self.radioOnLine = QRadioButton(self.groupBox)
         self.radioOnLine.setObjectName(u"radioOnLine")
@@ -80,7 +81,7 @@ class Ui_Dialog(object):
         self.labelES.setText(QCoreApplication.translate("Dialog", u"Espa\u00f1ol", None))
         self.labelEN.setText(QCoreApplication.translate("Dialog", u"Ingl\u00e9s", None))
         self.groupBox.setTitle(QCoreApplication.translate("Dialog", u"Traducci\u00f3n", None))
-        self.radioSolicitando.setText(QCoreApplication.translate("Dialog", u"Solicitando", None))
+        self.radioOffLine.setText(QCoreApplication.translate("Dialog", u"Solicitando", None))
         self.radioOnLine.setText(QCoreApplication.translate("Dialog", u"On line", None))
         self.botonTraducir.setText(QCoreApplication.translate("Dialog", u"Traducir", None))
     # retranslateUi
