@@ -4,8 +4,9 @@ import os
 import openai
 import base64
 import time
-from PySide6.QtWidgets import QApplication, QPushButton, QDialog, QTextEdit, QDialogButtonBox, QMessageBox
+from PySide6.QtWidgets import QApplication, QPushButton, QDialog, QTextEdit, QDialogButtonBox, QMessageBox, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem
 from modulos.ui_dialog import Ui_Dialog
+from PySide6.QtGui import QPixmap, QImage
 from easygoogletranslate import EasyGoogleTranslate
 from dotenv import load_dotenv
 class DialogWindow(QDialog):
@@ -15,7 +16,7 @@ class DialogWindow(QDialog):
         # Crear la interfaz de usuario con Ui_Dialog
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-
+        # cargamos variables de entorno .env
         load_dotenv()
         # Conectar la señal clicked de los radiobutton a una función
         self.ui.radioOnLine.clicked.connect(self.on_radio_clicked)
@@ -28,6 +29,12 @@ class DialogWindow(QDialog):
         #e iniciamos la variable trans_direc = False
         self.ui.botonTraducir.setEnabled(False)
         self.ui.botonSolicitar.setEnabled(False)
+
+        print(self.ui.imagenView.scene())
+        
+        self.scene = QGraphicsScene()
+        self.ui.imagenView.setScene(self.scene)
+
 
         #si es True la traducción se realizará directamente
         self.trans_direct = True
@@ -88,7 +95,7 @@ class DialogWindow(QDialog):
         prompt_en = self.ui.textEN.toPlainText()
         res = openai.Image.create(
             prompt=prompt_en,
-            n=int(2),
+            n=int(1),
             size=f'{256}x{256}',
             response_format="b64_json"
         )
@@ -96,7 +103,7 @@ class DialogWindow(QDialog):
             os.system('clear')
             for i in range(0, len(res['data'])):
                 b64 = res['data'][i]['b64_json']
-                fecha_actual = time.strftime("%Y-%m-%d")
+                fecha_actual = time.strftime("%Y%m%d-%H%M%S")
                 imagenName = fecha_actual + f"-{prompt_en[:8]}0" + str(i) + ".png"
                 filename = "Proyecto_AI/imagenes/" + imagenName
                 print('Saving file ' + filename)
@@ -104,7 +111,25 @@ class DialogWindow(QDialog):
                     f.write(base64.urlsafe_b64decode(b64))
                 filename = 'G:/Mi unidad/Dall-e/' + imagenName
                 with open(filename, 'wb') as f:
+                    image_qt = QImage(filename)
+                    pic = QGraphicsPixmapItem()
+                    pic.setPixmap(QPixmap.fromImage(image_qt))
+                    self.scene.setSceneRect(0, 0, 400, 400)
+                    self.scene.addItem(pic)
+                    ## POR AQUI VOY CESAR
+
+                    
                     f.write(base64.urlsafe_b64decode(b64)) 
+                    # #self.ui.imagenView.
+                    # # Crear una instancia de QPixmap
+                    # pixmap = QPixmap(filename)
+                    # # Crear una instancia de QGraphicsScene y agregar la imagen
+                    # scene = QGraphicsScene()
+                    # scene.addPixmap(pixmap)
+                    # # Crear una instancia de QGraphicsView y asignar la escena
+                    # view = QGraphicsView()
+                    # view.setScene(scene)
+
                 """ img = Image.open(BytesIO(base64.urlsafe_b64decode(b64)))  
                 photo = ImageTk.PhotoImage(img)
                 self.image_label = tk.Label(self.master, image=photo)

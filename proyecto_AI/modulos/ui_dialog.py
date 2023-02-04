@@ -23,7 +23,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(652, 527)
+        Dialog.resize(652, 818)
         Dialog.setAutoFillBackground(False)
         self.textES = QTextEdit(Dialog)
         self.textES.setObjectName(u"textES")
@@ -68,6 +68,9 @@ class Ui_Dialog(object):
         self.imagenView = QGraphicsView(Dialog)
         self.imagenView.setObjectName(u"imagenView")
         self.imagenView.setGeometry(QRect(190, 230, 256, 256))
+        brush = QBrush(QColor(255, 255, 255, 255))
+        brush.setStyle(Qt.NoBrush)
+        self.imagenView.setBackgroundBrush(brush)
 
         self.retranslateUi(Dialog)
 
