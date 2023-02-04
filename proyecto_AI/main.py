@@ -85,7 +85,39 @@ class DialogWindow(QDialog):
         
     def boton_solicitar_click(self):
         openai.api_key = os.getenv("OPENAI_API_KEY")
+        prompt_en = self.ui.textEN.toPlainText()
+        res = openai.Image.create(
+            prompt=prompt_en,
+            n=int(2),
+            size=f'{256}x{256}',
+            response_format="b64_json"
+        )
+        try:
+            os.system('clear')
+            for i in range(0, len(res['data'])):
+                b64 = res['data'][i]['b64_json']
+                fecha_actual = time.strftime("%Y-%m-%d")
+                imagenName = fecha_actual + f"-{prompt_en[:8]}0" + str(i) + ".png"
+                filename = "Proyecto_AI/imagenes/" + imagenName
+                print('Saving file ' + filename)
+                with open(filename, 'wb') as f:
+                    f.write(base64.urlsafe_b64decode(b64))
+                filename = 'G:/Mi unidad/Dall-e/' + imagenName
+                with open(filename, 'wb') as f:
+                    f.write(base64.urlsafe_b64decode(b64)) 
+                """ img = Image.open(BytesIO(base64.urlsafe_b64decode(b64)))  
+                photo = ImageTk.PhotoImage(img)
+                self.image_label = tk.Label(self.master, image=photo)
+                self.image_label.image = photo
+                self.image_label.grid(row=12, column=1, rowspan=3) """
+        except Exception as e:
+            error_api = QMessageBox.question(self, "Error en API openAI", f"Ha ocurrido un error: {e} en la petición",
+                    QMessageBox.Yes , "Entendido")
+            print(f'Error: {e}')
+
+
         print(f"api key =  {openai.api_key}")
+        print(f"Prompt =  {prompt_en}")
         pass        
 
     def on_accepted(self):
