@@ -7,7 +7,7 @@ import time
 from PySide6.QtWidgets import QApplication, QPushButton, QDialog, QTextEdit, QDialogButtonBox, QMessageBox
 from modulos.ui_dialog import Ui_Dialog
 from easygoogletranslate import EasyGoogleTranslate
-
+from dotenv import load_dotenv
 class DialogWindow(QDialog):
     def __init__(self, parent=None):
         super(DialogWindow, self).__init__(parent)
@@ -15,6 +15,8 @@ class DialogWindow(QDialog):
         # Crear la interfaz de usuario con Ui_Dialog
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+
+        load_dotenv()
         # Conectar la señal clicked de los radiobutton a una función
         self.ui.radioOnLine.clicked.connect(self.on_radio_clicked)
         self.ui.radioOffLine.clicked.connect(self.on_radio_clicked)
@@ -35,6 +37,8 @@ class DialogWindow(QDialog):
             target_language = 'en',
             timeout = 10
             )
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        
 
     def on_radio_clicked(self):
         if self.ui.radioOnLine.isChecked():
@@ -80,7 +84,8 @@ class DialogWindow(QDialog):
             self.ui.botonSolicitar.setEnabled(False)
         
     def boton_solicitar_click(self):
-        print("Aquí solicitamos a la API de openAI")
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+        print(f"api key =  {openai.api_key}")
         pass        
 
     def on_accepted(self):
