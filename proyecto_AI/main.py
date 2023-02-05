@@ -1,12 +1,13 @@
 # César L Sard - 2023-02-03
 # Desktop APP OpenAI - API
 import os
+#import sys
 import openai
 import base64
 import time
-from PySide6.QtWidgets import QApplication, QPushButton, QDialog, QTextEdit, QDialogButtonBox, QMessageBox, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem
+from PySide6.QtWidgets import QApplication, QDialog, QMessageBox
 from modulos.ui_dialog import Ui_Dialog
-from PySide6.QtGui import QPixmap, QImage
+from PySide6.QtGui import QPixmap
 from easygoogletranslate import EasyGoogleTranslate
 from dotenv import load_dotenv
 class DialogWindow(QDialog):
@@ -18,35 +19,42 @@ class DialogWindow(QDialog):
         self.ui.setupUi(self)
         # cargamos variables de entorno .env
         load_dotenv()
-        # Conectar la señal clicked de los radiobutton a una función
+        # Conectar eventos (Signal) a una función (Slot)
         self.ui.radioOnLine.clicked.connect(self.on_radio_clicked)
         self.ui.radioOffLine.clicked.connect(self.on_radio_clicked)
+        self.ui.cantidad_1.clicked.connect(self.cantidad_clicked)
+        self.ui.cantidad_2.clicked.connect(self.cantidad_clicked)
+        self.ui.size_1.clicked.connect(self.size_clicked)
+        self.ui.size_2.clicked.connect(self.size_clicked)
+        self.ui.size_3.clicked.connect(self.size_clicked)
         self.ui.textES.textChanged.connect(self.text_changed_online)
         self.ui.botonTraducir.clicked.connect(self.boton_traducir_click)
         self.ui.botonBorrar.clicked.connect(self.boton_borrar_click)
         self.ui.botonSolicitar.clicked.connect(self.boton_solicitar_click)
-        #Boton de traducción deshabilitado de comienzo
-        #e iniciamos la variable trans_direc = False
+        
+        # Boton de traducción y solicitud deshabilitado de comienzo
         self.ui.botonTraducir.setEnabled(False)
         self.ui.botonSolicitar.setEnabled(False)
-
-        print(self.ui.imagenView.scene())
+        # Iniciamos cantidad de imagenes a 1
+        self.cantidad = int(1)
+        # Ocultamos label de la segunda imagen
+        self.ui.label_2.setVisible(False)
+        # Definimos tamaño de imagen por defecto a 256x256
+        self.size_img = int(256)
         
-        self.scene = QGraphicsScene()
-        self.ui.imagenView.setScene(self.scene)
-
-
         #si es True la traducción se realizará directamente
         self.trans_direct = True
 
+        # Iniciamos parámetros para la traducción
         self.translator = EasyGoogleTranslate(
             source_language = 'es',
             target_language = 'en',
             timeout = 10
             )
+        # Leemos la clave de la API de openAI    
         openai.api_key = os.getenv("OPENAI_API_KEY")
         
-
+    # Bloques de funciones (Slot) de los diferentes eventos (Signal)
     def on_radio_clicked(self):
         if self.ui.radioOnLine.isChecked():
             self.trans_direct = True
@@ -54,27 +62,40 @@ class DialogWindow(QDialog):
         else:
             self.trans_direct = False
             self.ui.botonTraducir.setEnabled(True)
+    def cantidad_clicked(self):    
+        if self.ui.cantidad_1.isChecked():
+            self.cantidad = int(1)
+            self.ui.label_2.setVisible(False)
+        else:
+            self.cantidad = int(2)
+            self.ui.label_2.setVisible(True)
+        print (f"la cantidad de imagenes solicitadas es: {self.cantidad}")
+    def size_clicked(self):
+        if self.ui.size_2.isChecked():
+            self.size_img = int(512)
+        elif self.ui.size_3.isChecked():
+            self.size_img = int(1024)
+        else:
+            self.size_img = int(256)
+        print (f"el tamaño de imagen seleccionado es: {self.size_img}")
         
 
-        # Conectar la señal accepted del botón a una función
-        # self.ui.buttonBox.accepted.connect(self.on_accepted)
-        # self.ui.buttonBox.rejected.connect(self.on_rejected)
-
-    #Funcion para transladar automáticamente el texto en ES
+    # Funcion (Slot) para traducir automáticamente el texto en textES
     def text_changed_online(self):
         if self.trans_direct and len(self.ui.textES.toPlainText()) > 0: # Si la variable que controla tipo de traduccion es True
             translation = self.translator.translate(self.ui.textES.toPlainText())
             self.ui.textEN.setText(translation)
             self.ui.botonSolicitar.setEnabled(True)
+        # Si se ha borrado todo el texto en labelES borramos todo el texto en labelEN y desabilitamos botonSolicitar    
         elif len(self.ui.textES.toPlainText()) == 0:
             self.ui.textEN.setText("")
             self.ui.botonSolicitar.setEnabled(False)
 
 
         
-    #Cualdo se solicita traducir a través del boton Traducir          
+    # Cualdo se solicita traducir a través del boton Traducir   (TRADUCCIÓN NO ONLINE)        
     def boton_traducir_click(self):
-        if not self.trans_direct:  #Si es FALSO la Traduccion online
+        if not self.trans_direct:  #Si es FALSO la Traduccion online (DIRECTA)
             translation = self.translator.translate(self.ui.textES.toPlainText())
             self.ui.textEN.setText(translation)
             if len(self.ui.textEN.toPlainText()) > 0:
@@ -82,6 +103,7 @@ class DialogWindow(QDialog):
             else:
                 self.ui.botonSolicitar.setEnabled(False)
 
+    # Funcion (Slot) del botonBorrar
     def boton_borrar_click(self):
         resultado = QMessageBox.question(self, "Borrar contenido", "¿Realmente quiere borrar el contenido?",
                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
@@ -89,18 +111,23 @@ class DialogWindow(QDialog):
             self.ui.textEN.setText("")
             self.ui.textES.setText("")
             self.ui.botonSolicitar.setEnabled(False)
-        
+
+    # Esta función es la que solicita a openAI imagenen/es, segun el prompt obtenido de textEN    
     def boton_solicitar_click(self):
         openai.api_key = os.getenv("OPENAI_API_KEY")
         prompt_en = self.ui.textEN.toPlainText()
+        #sys.exit("salida forzada")
         res = openai.Image.create(
             prompt=prompt_en,
-            n=int(1),
-            size=f'{256}x{256}',
+            n=int(self.cantidad),
+            size=f'{self.size_img}x{self.size_img}',
             response_format="b64_json"
         )
         try:
+            # Borramos consola
             os.system('clear')
+
+            # Bucle donde se guardan las imagenes en local y se visualizan imagenes
             for i in range(0, len(res['data'])):
                 b64 = res['data'][i]['b64_json']
                 fecha_actual = time.strftime("%Y%m%d-%H%M%S")
@@ -108,51 +135,30 @@ class DialogWindow(QDialog):
                 filename = "Proyecto_AI/imagenes/" + imagenName
                 print('Saving file ' + filename)
                 with open(filename, 'wb') as f:
+                    # Se escribe la imagen en carpeta local Proyecto_AI/imagenes/
                     f.write(base64.urlsafe_b64decode(b64))
+
                 filename = 'G:/Mi unidad/Dall-e/' + imagenName
                 with open(filename, 'wb') as f:
-                    image_qt = QImage(filename)
-                    pic = QGraphicsPixmapItem()
-                    pic.setPixmap(QPixmap.fromImage(image_qt))
-                    self.scene.setSceneRect(0, 0, 400, 400)
-                    self.scene.addItem(pic)
-                    ## POR AQUI VOY CESAR
-
-                    
+                    # Se escribe la imagen en carpeta local Google G:/Mi unidad/Dall-e/
                     f.write(base64.urlsafe_b64decode(b64)) 
-                    # #self.ui.imagenView.
-                    # # Crear una instancia de QPixmap
-                    # pixmap = QPixmap(filename)
-                    # # Crear una instancia de QGraphicsScene y agregar la imagen
-                    # scene = QGraphicsScene()
-                    # scene.addPixmap(pixmap)
-                    # # Crear una instancia de QGraphicsView y asignar la escena
-                    # view = QGraphicsView()
-                    # view.setScene(scene)
 
-                """ img = Image.open(BytesIO(base64.urlsafe_b64decode(b64)))  
-                photo = ImageTk.PhotoImage(img)
-                self.image_label = tk.Label(self.master, image=photo)
-                self.image_label.image = photo
-                self.image_label.grid(row=12, column=1, rowspan=3) """
+                    # Comenzamos proceso para visualizar imagenes en los label *********
+                    pixmap = QPixmap(filename)
+                    if i == int(0):
+                        self.ui.label_1.setPixmap(pixmap)
+                    elif i == int(1):
+                        self.ui.label_2.setPixmap(pixmap)  
+                    # Se termina proceso *********
+
+
         except Exception as e:
             error_api = QMessageBox.question(self, "Error en API openAI", f"Ha ocurrido un error: {e} en la petición",
                     QMessageBox.Yes , "Entendido")
             print(f'Error: {e}')
 
-
         print(f"api key =  {openai.api_key}")
         print(f"Prompt =  {prompt_en}")
-        pass        
-
-    def on_accepted(self):
-        # hacer algo cuando se pulse el botón OK
-        pass
-
-    def on_rejected(self):
-        # hacer algo cuando se pulse el botón Cancelar
-        pass
-
 
 
 if __name__ == "__main__":

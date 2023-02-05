@@ -7,13 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>652</width>
-    <height>818</height>
+    <height>723</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dall-e API</string>
   </property>
   <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
    <bool>false</bool>
   </property>
   <widget class="QTextEdit" name="textES">
@@ -24,6 +30,12 @@
      <width>590</width>
      <height>50</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="toolTipDuration">
+    <number>-1</number>
    </property>
   </widget>
   <widget class="QTextEdit" name="textEN">
@@ -59,7 +71,7 @@
    <property name="geometry">
     <rect>
      <x>500</x>
-     <y>450</y>
+     <y>230</y>
      <width>111</width>
      <height>27</height>
     </rect>
@@ -108,19 +120,19 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QRadioButton" name="radioOffLine">
-      <property name="text">
-       <string>Solicitando</string>
-      </property>
-     </widget>
-    </item>
-    <item>
      <widget class="QRadioButton" name="radioOnLine">
       <property name="text">
        <string>On line</string>
       </property>
       <property name="checked">
        <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="radioOffLine">
+      <property name="text">
+       <string>Solicitando</string>
       </property>
      </widget>
     </item>
@@ -142,24 +154,144 @@
     <string>Traducir</string>
    </property>
   </widget>
-  <widget class="QGraphicsView" name="imagenView">
+  <widget class="QLabel" name="label_1">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>230</y>
+     <x>200</x>
+     <y>200</y>
      <width>256</width>
      <height>256</height>
     </rect>
    </property>
-   <property name="backgroundBrush">
-    <brush brushstyle="NoBrush">
-     <color alpha="255">
-      <red>255</red>
-      <green>255</green>
-      <blue>255</blue>
-     </color>
-    </brush>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
    </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <property name="lineWidth">
+    <number>3</number>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>G:/Mi unidad/piumosso.es/web/logo/logo nuevo 512x512.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>460</y>
+     <width>256</width>
+     <height>256</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <property name="lineWidth">
+    <number>3</number>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>G:/Mi unidad/piumosso.es/web/logo/logo nuevo 512x512.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>380</y>
+     <width>121</width>
+     <height>102</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Cantidad</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QRadioButton" name="cantidad_1">
+      <property name="text">
+       <string>1</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="cantidad_2">
+      <property name="text">
+       <string>2</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_3">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>500</y>
+     <width>121</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Tamaño</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="QRadioButton" name="size_1">
+      <property name="text">
+       <string>256</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="size_2">
+      <property name="text">
+       <string>512</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="size_3">
+      <property name="text">
+       <string>1024</string>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
