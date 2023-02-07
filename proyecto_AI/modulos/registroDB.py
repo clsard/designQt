@@ -10,7 +10,7 @@ class Database:
         )
         self.db_cursor = self.connection.cursor()
         
-    def add_record(self, table, fecha_bd, hora_bd, prompt_es, prompt_en, cantidad, size_solicitado, imagen_name ,carpeta_xml):
+    def add_record_img(self, table, fecha_bd, hora_bd, prompt_es, prompt_en, cantidad, size_solicitado, imagen_name ,carpeta_xml):
         query = f"INSERT INTO {table} (fecha, hora, prompt_es, prompt_en, cantidad, size, archivo, carpeta)  VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         valores = (fecha_bd, hora_bd, prompt_es, prompt_en, cantidad, size_solicitado, imagen_name, carpeta_xml)
         try:

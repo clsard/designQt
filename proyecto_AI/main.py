@@ -1,7 +1,6 @@
 # César L Sard - 2023-02-03
-# Desktop APP OpenAI - API
+# Desktop APP OpenAI - API - Dall-e
 import os
-import sys
 import openai
 import base64
 import time
@@ -10,8 +9,8 @@ from modulos.ui_dialog import Ui_Dialog
 from PySide6.QtGui import QPixmap
 from easygoogletranslate import EasyGoogleTranslate
 from dotenv import load_dotenv
-#from modulos.registroXML import Registro, GuardarXML
 from modulos.registroDB import Database
+
 class DialogWindow(QDialog):
     def __init__(self, parent=None):
         super(DialogWindow, self).__init__(parent)
@@ -167,7 +166,7 @@ class DialogWindow(QDialog):
                         self.ui.label_2.setPixmap(pixmap)  
                     
                     carpeta_img = filename
-                    self.db.add_record("dall_e", fecha_bd, hora_bd, prompt_es, prompt_en, cantidad, size_solicitado, imagen_name ,carpeta_img)
+                    self.db.add_record_img("dall_e", fecha_bd, hora_bd, prompt_es, prompt_en, cantidad, size_solicitado, imagen_name ,carpeta_img)
                     # Se reinicia a su valor por defecto la carpeta local
                     carpeta_img = "G:/Mi unidad/Dall-e/"
                     # Se termina proceso *********
@@ -197,6 +196,6 @@ if __name__ == "__main__":
         else:
             event.ignore()
 
-    # Dispara (Signal) del evento close. Evento del cierre de ventana (X) o Alt+F4
+    # Dispara (Signal) del (slot) on_window_close) close. Evento del cierre de ventana (X) o Alt+F4
     dialog.closeEvent = on_window_close
     app.exec()
