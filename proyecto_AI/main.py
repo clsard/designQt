@@ -15,13 +15,17 @@ from modulos.registroDB import Database
 class DialogWindow(QDialog):
     def __init__(self, parent=None):
         super(DialogWindow, self).__init__(parent)
+        # cargamos variables de entorno .env
+        load_dotenv() 
+        # Leemos la clave de acceso a la Base de Datos    
+        mi_clave = os.getenv("BASEDATOS_PASSWORD")
+        
+        self.db = Database(host="localhost", user="clsard", password=mi_clave, database="open_ai")
 
-        self.db = Database(host="localhost", user="clsard", password="*2013Cct&Clsm1205#", database="open_ai")
+        #self.mycursor = self.db.db_cursor
 
-        self.mycursor = self.db.db_cursor
-
-    def __del__(self):
-        self.db.close()
+    # def __del__(self):
+    #     self.db.close()
         #self.mycursor.execute("SHOW DATABASES")
 
         # for x in mycursor:
@@ -32,9 +36,9 @@ class DialogWindow(QDialog):
         # Crear la interfaz de usuario con Ui_Dialog
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        # cargamos variables de entorno .env
-        load_dotenv()
+
         # Conectar eventos (Signal) a una función (Slot)
+        
         self.ui.radioOnLine.clicked.connect(self.on_radio_clicked)
         self.ui.radioOffLine.clicked.connect(self.on_radio_clicked)
         self.ui.cantidad_1.clicked.connect(self.cantidad_clicked)
@@ -66,8 +70,8 @@ class DialogWindow(QDialog):
             target_language = 'en',
             timeout = 10
             )
-        # Leemos la clave de la API de openAI    
-        openai.api_key = os.getenv("OPENAI_API_KEY")
+           
+        
         
     # Bloques de funciones (Slot) de los diferentes eventos (Signal)
     def on_radio_clicked(self):
@@ -141,8 +145,8 @@ class DialogWindow(QDialog):
             response_format="b64_json"
         )
         cantidad = self.cantidad
-        archivo_xml = "registrosDall-e.xml"
-        carpeta_xml = "G:/Mi unidad/Dall-e/" + archivo_xml
+        #archivo_xml = "registrosDall-e.xml"
+        carpeta_img = "G:/Mi unidad/Dall-e/"
         size_solicitado = self.size_img
         try:
             # Borramos consola
@@ -162,27 +166,31 @@ class DialogWindow(QDialog):
                 with open(filename, 'wb') as f:
                     # Se escribe la imagen en carpeta local Proyecto_AI/imagenes/
                     f.write(base64.urlsafe_b64decode(b64))
-                carpeta = "G:/Mi unidad/Dall-e/"
-                filename = carpeta + imagen_name
+                #carpeta = "G:/Mi unidad/Dall-e/"
+                filename = carpeta_img + imagen_name
+                
                 with open(filename, 'wb') as f:
                     # Se escribe la imagen en carpeta local Google G:/Mi unidad/Dall-e/
                     f.write(base64.urlsafe_b64decode(b64)) 
 
-                    # Comenzamos proceso para visualizar imagenes en los label *********
+                    # Comenzamos proceso para visualizar imagenes en los label y guardar registros*********
                     pixmap = QPixmap(filename)
                     if i == int(0):
                         self.ui.label_1.setPixmap(pixmap)
                     elif i == int(1):
                         self.ui.label_2.setPixmap(pixmap)  
-                    # Se termina proceso *********
                     
-                    self.db.add_record("dall_e", fecha_bd, hora_bd, prompt_es, prompt_en, cantidad, size_solicitado, imagen_name ,carpeta_xml)
+                    carpeta_img = filename
+                    self.db.add_record("dall_e", fecha_bd, hora_bd, prompt_es, prompt_en, cantidad, size_solicitado, imagen_name ,carpeta_img)
+                    # Se reinicia a su valor por defecto la carpeta local
+                    carpeta_img = "G:/Mi unidad/Dall-e/"
+                    # Se termina proceso *********
+
+
                     # guardar = GuardarXML(carpeta_xml)
                     # registro = Registro(fecha_actual, prompt_es, prompt_en, cantidad, size_solicitado, carpeta_xml, imagen_name)
                     # guardar.agregar_registro(registro)
-                    
-                    
-                # guardar.guardar()
+        
 
 
 
@@ -192,6 +200,10 @@ class DialogWindow(QDialog):
                     QMessageBox.Yes , QMessageBox.Yes)
             print(f'Error: {e}')
 
+
+                    
+                    
+                # guardar.guardar()
         
 
         print(f"api key =  {openai.api_key}")
@@ -202,4 +214,16 @@ if __name__ == "__main__":
     app = QApplication()
     dialog = DialogWindow()
     dialog.show()
+
+    # Función (slot) al intentar cerrar la ventana del dialogo principal
+    def on_window_close(event):
+        result = QMessageBox.question(dialog, "Cerrar ventana", "¿Realmente quieres cerrar la ventana?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if result == QMessageBox.Yes:
+            dialog.db.close()
+            event.accept()
+        else:
+            event.ignore()
+
+    # Dispara (Signal) del evento close. Evento del cierre de ventana
+    dialog.closeEvent = on_window_close
     app.exec()
