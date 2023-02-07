@@ -22,17 +22,6 @@ class DialogWindow(QDialog):
         
         self.db = Database(host="localhost", user="clsard", password=mi_clave, database="open_ai")
 
-        #self.mycursor = self.db.db_cursor
-
-    # def __del__(self):
-    #     self.db.close()
-        #self.mycursor.execute("SHOW DATABASES")
-
-        # for x in mycursor:
-        #     print(x)
-        # db.close() 
-        # sys.exit()
-        
         # Crear la interfaz de usuario con Ui_Dialog
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
@@ -52,17 +41,17 @@ class DialogWindow(QDialog):
         self.ui.botonSolicitar.clicked.connect(self.boton_solicitar_click)
         
         # Boton de traducción y solicitud deshabilitado de comienzo
-        self.ui.botonTraducir.setEnabled(False)
+        self.ui.botonTraducir.setEnabled(True)
         self.ui.botonSolicitar.setEnabled(False)
+        self.ui.radioOffLine.setChecked(True)
         # Iniciamos cantidad de imagenes a 1
         self.cantidad = int(1)
         # Ocultamos label de la segunda imagen
         self.ui.label_2.setVisible(False)
         # Definimos tamaño de imagen por defecto a 256x256
         self.size_img = int(256)
-        
         #si es True la traducción se realizará directamente
-        self.trans_direct = True
+        self.trans_direct = False
 
         # Iniciamos parámetros para la traducción
         self.translator = EasyGoogleTranslate(
@@ -70,10 +59,8 @@ class DialogWindow(QDialog):
             target_language = 'en',
             timeout = 10
             )
-           
-        
-        
-    # Bloques de funciones (Slot) de los diferentes eventos (Signal)
+    
+    # Radiobuttons cliqueados. Bloques de funciones (Slot) de los diferentes eventos (Signal)
     def on_radio_clicked(self):
         if self.ui.radioOnLine.isChecked():
             self.trans_direct = True
@@ -99,7 +86,7 @@ class DialogWindow(QDialog):
         print (f"el tamaño de imagen seleccionado es: {self.size_img}")
         
 
-    # Funcion (Slot) para traducir automáticamente el texto en textES
+    # Introduciendo texto español. Funcion (Slot) para traducir automáticamente el texto en textES
     def text_changed_online(self):
         if self.trans_direct and len(self.ui.textES.toPlainText()) > 0: # Si la variable que controla tipo de traduccion es True
             translation = self.translator.translate(self.ui.textES.toPlainText())
@@ -112,7 +99,7 @@ class DialogWindow(QDialog):
 
 
         
-    # Cualdo se solicita traducir a través del boton Traducir   (TRADUCCIÓN NO ONLINE)        
+    # Boton Traducir (Slot) Cuando se solicita traducir   (TRADUCCIÓN NO ONLINE)        
     def boton_traducir_click(self):
         if not self.trans_direct:  #Si es FALSO la Traduccion online (DIRECTA)
             translation = self.translator.translate(self.ui.textES.toPlainText())
@@ -122,7 +109,7 @@ class DialogWindow(QDialog):
             else:
                 self.ui.botonSolicitar.setEnabled(False)
 
-    # Funcion (Slot) del botonBorrar
+    # Boton de Borrado de texto: Funcion (Slot)
     def boton_borrar_click(self):
         resultado = QMessageBox.question(self, "Borrar contenido", "¿Realmente quiere borrar el contenido?",
                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
@@ -131,7 +118,7 @@ class DialogWindow(QDialog):
             self.ui.textES.setText("")
             self.ui.botonSolicitar.setEnabled(False)
 
-   # Esta función (Slot) es la que solicita a openAI imagenen/es, segun el prompt obtenido de textEN    
+   # Boton Solicitar: función (Slot) es la que solicita a openAI imagenen/es, segun el prompt obtenido de textEN    
     def boton_solicitar_click(self):
         openai.api_key = os.getenv("OPENAI_API_KEY")
         prompt_en = self.ui.textEN.toPlainText()
@@ -145,7 +132,6 @@ class DialogWindow(QDialog):
             response_format="b64_json"
         )
         cantidad = self.cantidad
-        #archivo_xml = "registrosDall-e.xml"
         carpeta_img = "G:/Mi unidad/Dall-e/"
         size_solicitado = self.size_img
         try:
@@ -185,12 +171,7 @@ class DialogWindow(QDialog):
                     # Se reinicia a su valor por defecto la carpeta local
                     carpeta_img = "G:/Mi unidad/Dall-e/"
                     # Se termina proceso *********
-
-
-                    # guardar = GuardarXML(carpeta_xml)
-                    # registro = Registro(fecha_actual, prompt_es, prompt_en, cantidad, size_solicitado, carpeta_xml, imagen_name)
-                    # guardar.agregar_registro(registro)
-        
+      
 
 
 
@@ -200,14 +181,6 @@ class DialogWindow(QDialog):
                     QMessageBox.Yes , QMessageBox.Yes)
             print(f'Error: {e}')
 
-
-                    
-                    
-                # guardar.guardar()
-        
-
-        print(f"api key =  {openai.api_key}")
-        print(f"Prompt =  {prompt_en}")
 
 
 if __name__ == "__main__":
@@ -224,6 +197,6 @@ if __name__ == "__main__":
         else:
             event.ignore()
 
-    # Dispara (Signal) del evento close. Evento del cierre de ventana
+    # Dispara (Signal) del evento close. Evento del cierre de ventana (X) o Alt+F4
     dialog.closeEvent = on_window_close
     app.exec()
