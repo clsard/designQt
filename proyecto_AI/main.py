@@ -1,7 +1,7 @@
 # César L Sard - 2023-02-03
 # Desktop APP OpenAI - API
 import os
-#import sys
+import sys
 import openai
 import base64
 import time
@@ -10,10 +10,25 @@ from modulos.ui_dialog import Ui_Dialog
 from PySide6.QtGui import QPixmap
 from easygoogletranslate import EasyGoogleTranslate
 from dotenv import load_dotenv
+#from modulos.registroXML import Registro, GuardarXML
+from modulos.registroDB import Database
 class DialogWindow(QDialog):
     def __init__(self, parent=None):
         super(DialogWindow, self).__init__(parent)
 
+        self.db = Database(host="localhost", user="clsard", password="*2013Cct&Clsm1205#", database="open_ai")
+
+        self.mycursor = self.db.db_cursor
+
+    def __del__(self):
+        self.db.close()
+        #self.mycursor.execute("SHOW DATABASES")
+
+        # for x in mycursor:
+        #     print(x)
+        # db.close() 
+        # sys.exit()
+        
         # Crear la interfaz de usuario con Ui_Dialog
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
@@ -112,10 +127,12 @@ class DialogWindow(QDialog):
             self.ui.textES.setText("")
             self.ui.botonSolicitar.setEnabled(False)
 
-    # Esta función es la que solicita a openAI imagenen/es, segun el prompt obtenido de textEN    
+   # Esta función (Slot) es la que solicita a openAI imagenen/es, segun el prompt obtenido de textEN    
     def boton_solicitar_click(self):
         openai.api_key = os.getenv("OPENAI_API_KEY")
         prompt_en = self.ui.textEN.toPlainText()
+        prompt_es = self.ui.textES.toPlainText() # Para guardar en archivo XML
+        
         #sys.exit("salida forzada")
         res = openai.Image.create(
             prompt=prompt_en,
@@ -123,22 +140,30 @@ class DialogWindow(QDialog):
             size=f'{self.size_img}x{self.size_img}',
             response_format="b64_json"
         )
+        cantidad = self.cantidad
+        archivo_xml = "registrosDall-e.xml"
+        carpeta_xml = "G:/Mi unidad/Dall-e/" + archivo_xml
+        size_solicitado = self.size_img
         try:
             # Borramos consola
             os.system('clear')
-
+            
             # Bucle donde se guardan las imagenes en local y se visualizan imagenes
             for i in range(0, len(res['data'])):
                 b64 = res['data'][i]['b64_json']
-                fecha_actual = time.strftime("%Y%m%d-%H%M%S")
-                imagenName = fecha_actual + f"-{prompt_en[:8]}0" + str(i) + ".png"
-                filename = "Proyecto_AI/imagenes/" + imagenName
+
+                fecha_bd = time.strftime("%Y%m%d")
+                hora_bd = (time.strftime("%H%M%S"))
+                fecha_actual = f"{fecha_bd}-{hora_bd}"
+                
+                imagen_name = fecha_actual + f"-{prompt_en[:8]}0" + str(i) + ".png"
+                filename = "Proyecto_AI/imagenes/" + imagen_name
                 print('Saving file ' + filename)
                 with open(filename, 'wb') as f:
                     # Se escribe la imagen en carpeta local Proyecto_AI/imagenes/
                     f.write(base64.urlsafe_b64decode(b64))
-
-                filename = 'G:/Mi unidad/Dall-e/' + imagenName
+                carpeta = "G:/Mi unidad/Dall-e/"
+                filename = carpeta + imagen_name
                 with open(filename, 'wb') as f:
                     # Se escribe la imagen en carpeta local Google G:/Mi unidad/Dall-e/
                     f.write(base64.urlsafe_b64decode(b64)) 
@@ -150,12 +175,24 @@ class DialogWindow(QDialog):
                     elif i == int(1):
                         self.ui.label_2.setPixmap(pixmap)  
                     # Se termina proceso *********
+                    
+                    self.db.add_record("dall_e", fecha_bd, hora_bd, prompt_es, prompt_en, cantidad, size_solicitado, imagen_name ,carpeta_xml)
+                    # guardar = GuardarXML(carpeta_xml)
+                    # registro = Registro(fecha_actual, prompt_es, prompt_en, cantidad, size_solicitado, carpeta_xml, imagen_name)
+                    # guardar.agregar_registro(registro)
+                    
+                    
+                # guardar.guardar()
+
+
 
 
         except Exception as e:
-            error_api = QMessageBox.question(self, "Error en API openAI", f"Ha ocurrido un error: {e} en la petición",
-                    QMessageBox.Yes , "Entendido")
+            error_api = QMessageBox.question(self, "Error en main.py", f"Ha ocurrido un error: {e} en la petición",
+                    QMessageBox.Yes , QMessageBox.Yes)
             print(f'Error: {e}')
+
+        
 
         print(f"api key =  {openai.api_key}")
         print(f"Prompt =  {prompt_en}")
