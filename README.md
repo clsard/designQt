@@ -76,6 +76,10 @@ https://www.youtube.com/watch?v=ot94H3-d5d8
 >Interesante para conocer sistema de archivos QT
 https://doc.qt.io/qtforpython/tutorials/pretutorial/typesoffiles.html#file-types
 
+>Crear (.py) a partir de un archivo (.ui) de QtDesigner o QtCreator:
+>desde el terminal bash de Python:
+
+***$ pyside6-uic archivo.ui -o ArchivoNuevo.py***
 
 
 
