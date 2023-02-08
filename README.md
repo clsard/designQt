@@ -78,7 +78,7 @@ https://doc.qt.io/qtforpython/tutorials/pretutorial/typesoffiles.html#file-types
 
 >para instalar la libreria dotenv (variables de entorno)
 >
-pip install python-dotenv
+***pip install python-dotenv***
 
 
 
