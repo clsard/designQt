@@ -76,7 +76,8 @@ https://www.youtube.com/watch?v=ot94H3-d5d8
 >Interesante para conocer sistema de archivos QT
 https://doc.qt.io/qtforpython/tutorials/pretutorial/typesoffiles.html#file-types
 
-
+>para instalar la libreria dotenv (variables de entorno)
+pip install python-dotenv
 
 
 
